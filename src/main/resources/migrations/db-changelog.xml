@@ -1,0 +1,42 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="t_user" author="etauroginskaya">
+        <createTable tableName="user">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="varchar(127)"/>
+            <column name="password" type="varchar(127)"/>
+            <column name="role" type="varchar(127)"/>
+        </createTable>
+        <insert tableName="user">
+            <column name="username" value="super"/>
+            <column name="password" value="$2a$12$yJC/IQ2QYg/3FjNPoNiRfexcu3emdwhHBURzsMXL.GTs2i5tFkmZS"/>
+            <column name="role" value="SUPER_USER"/>
+        </insert>
+        <insert tableName="user">
+            <column name="username" value="customer"/>
+            <column name="password" value="$2a$12$3BHNyNohwTSfGhdtgCf26OpF61o1UZN26tEvVcR64bT1vstdtdYkG"/>
+            <column name="role" value="CUSTOMER_USER"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="t_discount" author="etauroginskaya">
+        <createTable tableName="discount">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar(127)"/>
+            <column name="percent" type="bigint"/>
+            <column name="expiration_date" type="varchar(127)"/>
+            <column name="user_id" type="bigint"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="discount" baseColumnNames="user_id" constraintName="fk_discount_user"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>
